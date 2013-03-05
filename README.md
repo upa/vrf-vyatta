@@ -67,7 +67,7 @@ install.sh installs vyatta cli extensions and some scripts.
 The prefix of extension scripts is _xyatta_.
 
 
-Configuratino example
+Configuratin example
 ---------------------
 
 Content of VRF is linux network namespace. When new namespace is 
