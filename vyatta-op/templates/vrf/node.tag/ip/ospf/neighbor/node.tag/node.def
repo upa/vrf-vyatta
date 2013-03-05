@@ -1,5 +1,0 @@
-help: Show IPv4 OSPF neighbor information for specified IP address or interface
-allowed: local -a array ;
-	 array=( /sys/class/net/* ) ;
-	 echo  -n '<x.x.x.x>' ${array[@]##*/}
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

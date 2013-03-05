@@ -1,2 +1,0 @@
-help: Show IPv4 OSPF opaque-link database
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

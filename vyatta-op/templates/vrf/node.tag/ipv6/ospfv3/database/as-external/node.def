@@ -1,2 +1,0 @@
-help: Show AS-External LSAs
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

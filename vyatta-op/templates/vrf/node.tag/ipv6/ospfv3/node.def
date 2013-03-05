@@ -1,2 +1,0 @@
-help: Show OSPFv3 information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

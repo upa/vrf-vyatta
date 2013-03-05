@@ -1,3 +1,0 @@
-help: Show IPv6 routes of given address or prefix
-allowed: echo -n '<X:X::X:X>' '<X:X::X:X/M>'
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

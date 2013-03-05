@@ -1,3 +1,0 @@
-help: Show kernel IPv6 route cache for a given route
-allowed: echo -n '<h:h:h:h:h:h:h:h | h:h:h:h:h:h:h:h/x>' 
-run: sudo /sbin/ip netns exec $3 ip -s -f inet6 route list cache $5

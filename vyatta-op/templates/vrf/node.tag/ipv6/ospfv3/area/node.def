@@ -1,6 +1,0 @@
-# Command entered is     show ipv6 ospfv3 area
-# Re-arrange for Quagga  show ipv6 ospfv3 spf tree
-# First parameter is available as $1
-# vtyshow.pl require $1 to be 'show', not a string
-help: Show OSPFv3 spf-tree information
-run: ${vyatta_bindir}/xvtyshow.pl "$1" "$2 $3" "$4 $6 spf tree"

@@ -1,3 +1,0 @@
-help: Show IPv4 OSPF external database of specified IP address for specified advertised router
-allowed: echo -n '<x.x.x.x>'
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

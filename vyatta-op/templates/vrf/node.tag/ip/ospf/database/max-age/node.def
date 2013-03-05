@@ -1,2 +1,0 @@
-help: Show IPv4 OSPF max-age database
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

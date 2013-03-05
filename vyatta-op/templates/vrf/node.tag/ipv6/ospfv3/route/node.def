@@ -1,2 +1,0 @@
-help: Show OSPFv3 routing table information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

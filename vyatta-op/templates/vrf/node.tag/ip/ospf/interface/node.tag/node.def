@@ -1,3 +1,0 @@
-help: Show IPv4 OSPF information for specified interface
-run: ${vyatta_bindir}/xvtyshow.pl "$@"
-

@@ -1,2 +1,0 @@
-help: Show IPv6 OSPF6 routes
-run: vtysh -c "show ipv6 route ospf6"

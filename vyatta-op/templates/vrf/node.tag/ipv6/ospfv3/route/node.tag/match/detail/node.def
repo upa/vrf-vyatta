@@ -1,2 +1,0 @@
-help: Detailed information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

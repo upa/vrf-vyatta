@@ -1,2 +1,0 @@
-help: Show IPv6 static routes
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

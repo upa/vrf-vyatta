@@ -1,2 +1,0 @@
-help: Show IP routes
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

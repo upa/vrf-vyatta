@@ -1,2 +1,0 @@
-help: Show virtual routing and forwarding information
-run: ip netns list

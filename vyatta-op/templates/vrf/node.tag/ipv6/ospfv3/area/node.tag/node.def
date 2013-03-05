@@ -1,5 +1,0 @@
-help: Area ID
-allowed: echo -n '<x.x.x.x>'
-run: ${vyatta_bindir}/xvtyshow.pl "$@" "spf tree"
-
-

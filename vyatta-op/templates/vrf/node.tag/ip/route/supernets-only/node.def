@@ -1,2 +1,0 @@
-help: Show IP supernet routes
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

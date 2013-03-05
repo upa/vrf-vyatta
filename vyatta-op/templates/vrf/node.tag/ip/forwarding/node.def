@@ -1,2 +1,0 @@
-help: Show IP forwarding status
-run: ${vyatta_bindir}/xvtyshow.pl "$VAR(../../@)" "$@"

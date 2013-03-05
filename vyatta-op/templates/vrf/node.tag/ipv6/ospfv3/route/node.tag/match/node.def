@@ -1,2 +1,0 @@
-help: Show routes matching specified prefix
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

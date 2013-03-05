@@ -1,2 +1,0 @@
-help: Show linkstate Network information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

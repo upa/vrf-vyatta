@@ -1,2 +1,0 @@
-help: More detailed interface prefix information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

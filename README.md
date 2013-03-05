@@ -1,10 +1,10 @@
 VRF-VYATTA
 ==========
 
-vrf-vyatta is vyatta CLI extension for enabling VRF. 
-It enables that you can configure _vrf_ in top level of configure mode.
-It uses Linux Name Space. vrf-vyatta enables that protocl static, ospf, 
-and ospfv3 processes can be run on a vrf instance. 
+vrf-vyatta is vyatta CLI extension for enabling VRF using Linux network
+namespace. It enables that you can configure _vrf_ in top level of 
+configure mode. It uses Linux Name Space. Protocol static, ospf, and 
+ospfv3 processes can be run on a vrf instance. 
 And only vlan interface can be attached into VRF.
 
 

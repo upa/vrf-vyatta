@@ -1,2 +1,0 @@
-help: Show prefix information for specified interface
-run: ${vyatta_bindir}/vtyshow.pl "$@"

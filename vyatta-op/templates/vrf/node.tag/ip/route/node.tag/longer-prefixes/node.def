@@ -1,2 +1,0 @@
-help: Show longer prefixes of routes for specified IP address or prefix
-run: if /opt/vyatta/sbin/vyatta-validate-type.pl -q ipv4net $6; then sudo /usr/local/bin/vtysh -x /var/run/quagga-$3 -c "show ip route $6 longer-prefixes"; else echo $4 is not a valid ipv4net address. Please specify a valid ipv4net address ; fi

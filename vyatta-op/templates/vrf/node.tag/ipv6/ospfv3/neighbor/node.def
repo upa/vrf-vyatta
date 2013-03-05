@@ -1,2 +1,0 @@
-help: Show OSPFv3 neighbor information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

@@ -1,2 +1,0 @@
-help: Show Inter-Area route information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

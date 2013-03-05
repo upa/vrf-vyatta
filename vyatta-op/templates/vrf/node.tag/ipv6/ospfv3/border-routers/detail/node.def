@@ -1,2 +1,0 @@
-help: Show OSPFv3 detailed border-router information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

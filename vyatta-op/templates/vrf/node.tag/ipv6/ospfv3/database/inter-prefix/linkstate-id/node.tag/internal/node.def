@@ -1,2 +1,0 @@
-help: Show LSAs internal information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"

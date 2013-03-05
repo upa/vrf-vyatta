@@ -1,2 +1,0 @@
-help: Show IPv6 multicast group membership
-run: sudo /sbin/ip netns exec $3 netstat -gn6

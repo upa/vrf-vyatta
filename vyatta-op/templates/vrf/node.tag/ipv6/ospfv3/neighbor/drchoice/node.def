@@ -1,2 +1,0 @@
-help: Show neighbor DR choice information
-run: ${vyatta_bindir}/xvtyshow.pl "$@"
