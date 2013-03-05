@@ -1,0 +1,3 @@
+help: Show prefix route specific information
+allowed: echo -n '<X:X::X:X>' '<X:X::X:X/M>'
+run: ${vyatta_bindir}/vtyshow.pl "$@"

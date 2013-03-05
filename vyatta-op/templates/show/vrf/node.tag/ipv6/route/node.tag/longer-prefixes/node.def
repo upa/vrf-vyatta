@@ -1,0 +1,2 @@
+help: Show longer prefixes of routes for given address or prefix
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

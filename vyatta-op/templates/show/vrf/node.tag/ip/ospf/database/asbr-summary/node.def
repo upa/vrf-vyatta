@@ -1,0 +1,2 @@
+help: Show IPv4 OSPF ASBR summary database
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

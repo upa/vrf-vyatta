@@ -1,0 +1,2 @@
+help: Show IP kernel routes
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

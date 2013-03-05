@@ -1,0 +1,2 @@
+help: More detailed prefix information
+run: ${vyatta_bindir}/vtyshow.pl "$@"

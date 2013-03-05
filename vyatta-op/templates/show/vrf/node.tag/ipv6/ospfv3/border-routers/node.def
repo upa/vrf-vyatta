@@ -1,0 +1,2 @@
+help: Show OSPFv3 border-router (ABR and ASBR) information
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

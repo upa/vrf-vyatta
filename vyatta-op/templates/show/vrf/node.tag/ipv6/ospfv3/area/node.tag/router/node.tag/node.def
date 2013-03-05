@@ -1,0 +1,8 @@
+# Command entered is     show ipv6 ospfv3 area <AID> router <RID>
+# Re-arrange for Quagga  show ipv6 ospfv3 simulate spf-tree <RID> area >AID>
+# First parameter is available as $1
+# vtyshow.pl require $1 to be 'show', not a string
+
+help: Simulate view point (Router ID)
+allowed: echo -n '<x.x.x.x>'
+run: ${vyatta_bindir}/xvtyshow.pl "$1" "$2 $3 $4 $5 simulate spf-tree $9 $6 $7" 

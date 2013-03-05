@@ -1,0 +1,2 @@
+help: Show IPv4 OSPF route information
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

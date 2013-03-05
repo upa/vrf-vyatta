@@ -1,0 +1,3 @@
+help: Show IPv4 OSPF ASBR summary database of given address for given advertised router
+allowed: echo -n '<A.B.C.D>'
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

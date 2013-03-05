@@ -1,0 +1,2 @@
+help: Show IP route-maps per protocol
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

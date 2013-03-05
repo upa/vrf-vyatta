@@ -1,0 +1,2 @@
+help: Show IP OSPF routes
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

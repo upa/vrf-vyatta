@@ -1,0 +1,2 @@
+help: Show route table summary
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

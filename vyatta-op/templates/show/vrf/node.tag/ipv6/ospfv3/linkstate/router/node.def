@@ -1,0 +1,2 @@
+help: Show linkstate Router information
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

@@ -1,0 +1,2 @@
+help: Show IPv4 OSPF external database
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

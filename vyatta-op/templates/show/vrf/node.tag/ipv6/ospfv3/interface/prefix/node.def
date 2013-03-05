@@ -1,0 +1,2 @@
+help: Show connected prefixes to advertise
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

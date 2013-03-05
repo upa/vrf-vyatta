@@ -1,0 +1,2 @@
+help: Show Group-Membership LSAs
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

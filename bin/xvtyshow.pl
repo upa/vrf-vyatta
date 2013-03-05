@@ -27,7 +27,7 @@ use strict;
 use warnings;
 
 if ($ARGV[0] ne 'show' ) { die "must be a show command\n" };
-if ($ARGV[1] ne 'routing-instance' ) { die "must be a routing-instance command\n" };
+if ($ARGV[1] ne 'vrf' ) { die "must be a routing-instance command\n" };
 
 my $ns = $ARGV[2];
 splice (@ARGV, 1, 1);

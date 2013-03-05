@@ -1,0 +1,2 @@
+help: Show routes longer than specified prefix
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

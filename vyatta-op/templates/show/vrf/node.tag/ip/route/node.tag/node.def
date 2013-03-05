@@ -1,0 +1,3 @@
+help: Show IP routes of specified IP address or prefix
+allowed: echo -n '<x.x.x.x>' '<x.x.x.x/x>'
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

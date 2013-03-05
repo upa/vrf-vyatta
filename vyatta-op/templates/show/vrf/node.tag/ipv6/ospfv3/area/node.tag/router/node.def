@@ -1,0 +1,2 @@
+help: Simulate view point (Router ID)
+allowed: echo -n '<x.x.x.x>'

@@ -1,0 +1,3 @@
+help: Show specified routing instance information
+allowed: ip netns list
+

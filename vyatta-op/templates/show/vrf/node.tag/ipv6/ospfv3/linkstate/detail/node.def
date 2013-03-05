@@ -1,0 +1,2 @@
+help: Show detailed linkstate information
+run: ${vyatta_bindir}/xvtyshow.pl "$@"
