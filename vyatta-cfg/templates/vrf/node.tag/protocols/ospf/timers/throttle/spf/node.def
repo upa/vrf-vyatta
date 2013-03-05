@@ -1,0 +1,14 @@
+help: OSPF SPF timers
+delete: touch /tmp/ospf-timer.$PPID
+end: if [ -f "/tmp/ospf-timer.$PPID" ]; then
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "no timers throttle spf";
+        rm /tmp/ospf-timer.$PPID;
+     else
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "timers throttle spf $VAR(delay/@) $VAR(initial-holdtime/@) $VAR(max-holdtime/@)";
+     fi;

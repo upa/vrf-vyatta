@@ -1,0 +1,3 @@
+type: ipv4net
+help: Announce area range as another prefix
+syntax:expression: exec "${vyatta_sbindir}/check_prefix_boundary $VAR(@)"

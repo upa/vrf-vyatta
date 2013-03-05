@@ -1,0 +1,19 @@
+priority: 640
+help: IPv6 Open Shortest Path First protocol (OSPFv3) parameters
+begin: if [ "$COMMIT_ACTION" != DELETE ]; then
+         if [ -n "$VAR(parameters/router-id/@)" ]; then
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+		 -c "configure terminal" -c "router ospf6" \
+                 -c "router-id $VAR(parameters/router-id/@)"
+         else
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+		 -c "configure terminal" -c "router ospf6" \
+                 -c "no router-id"
+         fi
+       fi
+end: if [ "$COMMIT_ACTION" == DELETE ]; then
+       sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+	 -c "configure terminal" -c "router ospf6" -c "no router-id"
+       sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+	 -c "configure terminal" -c "no router ospf6"
+     fi

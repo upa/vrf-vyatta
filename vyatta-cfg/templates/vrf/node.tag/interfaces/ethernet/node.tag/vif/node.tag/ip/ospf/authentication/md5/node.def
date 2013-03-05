@@ -1,0 +1,12 @@
+help: MD5 parameters
+
+create: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../../@) \
+	-c "configure terminal" \
+	-c "interface $VAR(../../../../../@).$VAR(../../../../@)" \
+	-c "no ip ospf authentication" \
+	-c "ip ospf authentication message-digest"
+
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../../@) \
+	-c "configure terminal" \
+	-c "interface $VAR(../../../../../@).$VAR(../../../../@)" \
+        -c "no ip ospf authentication"

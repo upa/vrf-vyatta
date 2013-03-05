@@ -1,0 +1,36 @@
+#! /bin/bash
+#
+# Usage: vyatta-link-detect devicename on|off vrfname
+#
+
+usage() {
+    echo "Usage: $0 devicename {on|off} vrfname"
+    exit 1
+}
+
+if [ $# -ne 3 ]; then
+    usage
+fi
+
+# Note can't use sysctl it is broken for vif name because of dots
+# link_filter values:
+#   0 - always receive
+#   1 - ignore receive if admin_down
+#   2 - ignore receive if admin_down or link down
+set-sysctl () {
+    sudo sh -c "echo $2 >/proc/sys/net/ipv4/conf/$1/link_filter"
+#   sudo sh -c "echo $2 >/proc/sys/net/ipv6/conf/$1/link_filter"
+}
+
+case $2 in
+on)	set-sysctl $1 2
+	exec sudo /usr/local/bin/vtysh -x /var/run/quagga-$3 \
+	    -c "configure terminal" -c "interface $1" \
+	    -c "link-detect" ;;
+off)    set-sysctl $1 1
+	exec sudo /usr/local/bin/vtysh -x /var/run/quagga-$3 \
+	    -c "interface $1" \
+	    -c "no link-detect" ;;
+*)	usage;;
+esac
+# not reached

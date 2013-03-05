@@ -1,0 +1,13 @@
+type: u32
+help: Link state transmit delay
+val_help: u32:1-65535; Link state transmit delay (seconds)
+
+syntax:expression: $VAR(@) >= 1 && $VAR(@) <= 65535; "Must be between 1-65535"
+
+update:expression: "vtysh -c \"configure terminal\" \
+      -c \"router ospf\" \
+      -c \"area $VAR(../../@) virtual-link $VAR(../@) transmit-delay $VAR(@)\"; "
+
+delete:expression: "vtysh -c \"configure terminal\" \
+      -c \"router ospf\" \
+      -c \"no area $VAR(../../@) virtual-link $VAR(../@) transmit-delay \"; "

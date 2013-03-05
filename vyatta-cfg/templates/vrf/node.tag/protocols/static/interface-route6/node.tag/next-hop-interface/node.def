@@ -1,0 +1,35 @@
+tag:
+type: txt
+help: Next-hop interface [REQUIRED]
+# show all current interface
+# but syntax accepts any interface since it may exist later (ppp etc)
+allowed: sudo /sbin/ip netns exec $VAR(../../../../@) \
+		${vyatta_sbindir}/vyatta-interfaces.pl --show all
+
+end:
+  if [[ -z "$VAR(./disable)" ]]
+  then
+    if [[ ${COMMIT_ACTION} = 'DELETE' ]]
+    then
+      if ! sudo /sbin/ip netns exec $VAR(../../../../@) \
+	${vyatta_sbindir}/vyatta-next-hop-check $VAR(../@) ipv6 interface; then
+        exit 1;
+      fi
+
+      sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@)
+		    -c "configure terminal" \
+                   -c "no ipv6 route $VAR(../@) $VAR(@)"
+    else
+      if [[ -n "$VAR(./distance/@)" ]]
+      then
+        DIST="$VAR(./distance/@)"
+      fi
+      sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@)
+		   -c "configure terminal" \
+                   -c "ipv6 route $VAR(../@) $VAR(@) $DIST";
+    fi
+  else
+      sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@)
+		    -c "configure terminal" \
+                   -c "no ipv6 route $VAR(../@) $VAR(@)"
+  fi

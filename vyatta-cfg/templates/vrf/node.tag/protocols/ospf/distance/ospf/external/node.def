@@ -1,0 +1,4 @@
+type: u32
+help: Distance for external routes
+syntax:expression: $VAR(@) >= 1 && $VAR(@) <= 255; "Must be between 1-255"
+val_help: u32: 1-255; Distance for external routes

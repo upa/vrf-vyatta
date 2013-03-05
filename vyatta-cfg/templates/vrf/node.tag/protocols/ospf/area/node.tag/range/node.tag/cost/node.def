@@ -1,0 +1,4 @@
+type: u32
+help: Metric for this range
+syntax:expression: $VAR(@) >= 0 && $VAR(@) <= 16777215; "Metric must be between 0-16777215"
+val_help: u32: 0-16777215; Metric for this range

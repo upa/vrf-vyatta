@@ -1,0 +1,2 @@
+help: Show kernel IPv6 route table
+run: sudo /sbin/ip netns exec $3 ip -f inet6 route list

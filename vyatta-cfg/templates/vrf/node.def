@@ -1,0 +1,83 @@
+tag:
+priority: 100
+type:txt
+help: Virtual Routing and Forwarding
+val_help: <NAME>; Name of routing instance
+allowed: /sbin/ip netns list
+
+create:
+  if [ -d /var/run/quagga-$VAR(@) ]; then
+    sudo rm -rf /var/run/quagga-$VAR(@)
+  fi
+  if [ -d /var/run/quagga-$VAR(@) ]; then
+    sudo rm -rf /etc/quagga-$VAR(@)
+  fi
+  if [ -e /var/run/netns/$VAR(@) ]; then
+    sudo ip netns rm $VAR(@)
+    sleep 0.5
+  fi
+
+  sudo /sbin/ip netns add $VAR(@)
+  sleep 0.5
+  sudo /sbin/ip netns exec $VAR(@) ip link set dev lo up
+
+  sudo mkdir /var/run/quagga-$VAR(@)
+  sudo chown quagga:quagga  /var/run/quagga-$VAR(@)
+
+  sudo mkdir -p /etc/quagga-$VAR(@)
+  sudo touch /etc/quagga-$VAR(@)/zebra.conf
+  sudo touch /etc/quagga-$VAR(@)/ospfd.conf
+  sudo touch /etc/quagga-$VAR(@)/ospf6d.conf
+  sudo touch /etc/quagga-$VAR(@)/bgpd.conf
+  sudo chmod a+w -R /etc/quagga-$VAR(@)
+
+  sudo ${vyatta_sbindir}/xvyatta-quagga-config-gen.pl zebra > \
+  		/etc/quagga-$VAR(@)/zebra.conf
+  sudo ${vyatta_sbindir}/xvyatta-quagga-config-gen.pl ospfd > \
+		/etc/quagga-$VAR(@)/ospfd.conf
+  sudo ${vyatta_sbindir}/xvyatta-quagga-config-gen.pl ospf6d > \
+		/etc/quagga-$VAR(@)/ospf6d.conf
+  sudo ${vyatta_sbindir}/xvyatta-quagga-config-gen.pl bgpd > \
+		/etc/quagga-$VAR(@)/bgpd.conf
+  sudo chown -R quagga:quagga /etc/quagga-$VAR(@)
+
+  sleep 0.5
+
+  sudo /sbin/ip netns exec $VAR(@) \
+	/usr/local/sbin/zebra -d -P 0 -i /var/run/quagga-$VAR(@)/zebra.pid \
+	-f /etc/quagga-$VAR(@)/zebra.conf \
+	-x /var/run/quagga-$VAR(@)/zebra.vty
+
+  sudo /sbin/ip netns exec $VAR(@) \
+	/usr/local/sbin/ospfd -d -P 0 -i /var/run/quagga-$VAR(@)/ospfd.pid \
+	-f /etc/quagga-$VAR(@)/ospfd.conf \
+	-x /var/run/quagga-$VAR(@)/ospfd.vty
+
+  sudo /sbin/ip netns exec $VAR(@) \
+	/usr/local/sbin/ospf6d -d -P 0 -i /var/run/quagga-$VAR(@)/ospf6d.pid \
+	-f /etc/quagga-$VAR(@)/ospf6d.conf \
+	-x /var/run/quagga-$VAR(@)/ospf6d.vty
+
+  sudo /sbin/ip netns exec $VAR(@) \
+	/usr/local/sbin/bgpd -d -P 0 -i /var/run/quagga-$VAR(@)/bgpd.pid \
+	-f /etc/quagga-$VAR(@)/bgpd.conf \
+	-x /var/run/quagga-$VAR(@)/bgpd.vty
+
+
+delete:
+  if [ ! -d /var/run/quagga-$VAR(@) ]; then
+    echo "routing instance $VAR(@) does not exist"
+    exit -1
+  fi
+
+  sudo /sbin/ip netns exec $VAR(@) kill `cat /var/run/quagga-$VAR(@)/bgpd.pid`
+  sudo /sbin/ip netns exec $VAR(@) kill `cat /var/run/quagga-$VAR(@)/ospf6d.pid`
+  sudo /sbin/ip netns exec $VAR(@) kill `cat /var/run/quagga-$VAR(@)/ospfd.pid`
+  sudo /sbin/ip netns exec $VAR(@) kill `cat /var/run/quagga-$VAR(@)/zebra.pid`
+  sudo rm -rf /var/run/quagga-$VAR(@)
+  sudo rm -rf /etc/quagga-$VAR(@)
+
+  sleep 0.5
+  
+  sudo /sbin/ip netns delete $VAR(@)
+

@@ -1,0 +1,8 @@
+help: Log all state changes
+create:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+         -c \"configure terminal\" -c \"router ospf\" \
+         -c \"log-adjacency-changes detail\"; "
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+         -c \"configure terminal\" -c \"router ospf\" \
+         -c \"no log-adjacency-changes detail\"; "
+

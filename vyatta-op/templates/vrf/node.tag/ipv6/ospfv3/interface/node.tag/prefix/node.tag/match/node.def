@@ -1,0 +1,2 @@
+help: Matched interface prefix information
+run: ${vyatta_bindir}/vtyshow.pl "$@"

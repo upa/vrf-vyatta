@@ -1,0 +1,2 @@
+help: Show OSPFv3 Link state database information
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

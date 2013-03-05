@@ -1,0 +1,5 @@
+type: u32
+help: Initial hold time(msec) between consecutive SPF calculations
+default: 1000
+syntax:expression: $VAR(@) >= 0 && $VAR(@) <= 600000; "must be between 0-600000"
+val_help: u32:0-600000; Initial hold time in msec (default 1000)

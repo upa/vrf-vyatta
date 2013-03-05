@@ -1,0 +1,8 @@
+help: Enable the Opaque-LSA capability (rfc2370)
+create:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c \"configure terminal\" -c \"router ospf\" \
+          -c \"ospf opaque-lsa \"; "
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c \"configure terminal\" -c \"router ospf\" \
+          -c \"no ospf opaque-lsa \"; "
+

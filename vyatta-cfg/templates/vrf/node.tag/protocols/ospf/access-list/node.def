@@ -1,0 +1,4 @@
+tag:
+type: u32
+commit:expression: $VAR(./export/) != ""; "must add protocol to filter"
+help: Access list to filter networks in routing updates

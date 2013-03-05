@@ -1,0 +1,23 @@
+tag:
+type: u32
+help: MD5 key id
+syntax:expression: $VAR(@) >= 1 && $VAR(@) <= 255; "ID must be between (1-255)"
+val_help: u32:1-255; MD5 key id
+
+commit:expression: $VAR(md5-key/) != ""; "Must add the md5-key for key-id $VAR(@)"
+
+delete:expression: "touch /tmp/ospf-md5.$PPID"
+
+end:expression: "\
+      if [ -f \"/tmp/ospf-md5.$PPID\" ]; then                          \
+         vtysh -c \"configure terminal\"   \
+           -c \"router ospf\"                                          \
+           -c \"no area $VAR(../../../../@)                            \
+           virtual-link $VAR(../../../@) message-digest-key $VAR(@)\"; \
+         rm /tmp/ospf-md5.$PPID;                                       \
+      else                                                             \
+         vtysh -c \"configure terminal\"   \
+           -c \"router ospf\"                                          \
+           -c \"area $VAR(../../../../@) virtual-link $VAR(../../../@) \
+           message-digest-key $VAR(@) md5 $VAR(md5-key/@)\";           \
+      fi; "

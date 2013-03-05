@@ -1,0 +1,2 @@
+help: Show detailed Type-1 External route information
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

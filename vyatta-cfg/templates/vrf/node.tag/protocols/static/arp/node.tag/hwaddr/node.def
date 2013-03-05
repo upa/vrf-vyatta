@@ -1,0 +1,5 @@
+type: macaddr
+help: Hardware protocol (e.g. MAC) address to translate to
+val_help: Hardware (MAC) address
+
+

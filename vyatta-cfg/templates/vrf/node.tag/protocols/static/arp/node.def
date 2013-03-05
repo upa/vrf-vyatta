@@ -1,0 +1,34 @@
+tag:
+type: ipv4
+help: Static ARP translation
+val_help: IPv4 destination address
+
+#
+# All the work is done here in the "end:" tag.  There are four possible cases:
+#
+#   1) A new node and possibly sub-tree with hwaddr has been created
+#   2) Value of hwaddr node in sub-tree has been changed
+#   3) The hwaddr node in sub-tree has been deleted
+#   4) This node (and hence entire sub-tree) has been deleted
+# 
+# The flow is the same in all cases.  First, we delete any
+# previous static ARP translation that may be in place for this
+# IP addr.  This will typically fail in case (1) and in case (4) if the
+# hwaddr node had been previously deleted.  Then, if a hwaddr is defined,
+# we add a new startic ARP translation for this IP addr pointing to that
+# hwaddr.  This should always succeed, so we don't try to hide error
+# messages from the user.
+# 
+# We always force a successful return in order to prevent transient
+# failures of the "arp" command from failing the commit.
+# 
+end:
+	ipaddr=$VAR(@)
+	hwaddr=$VAR(hwaddr/@)
+	sudo /sbin/ip netns exec $VAR(../../../@) \
+		/usr/sbin/arp -d $ipaddr > /dev/null
+	if [ -n "$hwaddr" ]; then
+	    sudo /sbin/ip netns exec $VAR(../../../@) \
+		/usr/sbin/arp -s $ipaddr $hwaddr
+	fi
+	exit 0

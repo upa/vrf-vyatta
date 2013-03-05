@@ -1,0 +1,23 @@
+priority: 620
+help: Open Shortest Path First protocol (OSPF) parameters
+begin: 
+
+       if [ "$COMMIT_ACTION" != DELETE ]; then
+         if [ -n "$VAR(parameters/router-id/@)" ]; then
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+		-c "configure terminal" -c "router ospf" \
+                -c "ospf router-id $VAR(parameters/router-id/@)"
+         else
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+          	-c "configure terminal" -c "router ospf" \
+                -c "no ospf router-id"
+         fi
+       fi
+
+
+end: if [ "$COMMIT_ACTION" == DELETE ]; then
+       sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+       		-c "configure terminal" -c "router ospf" -c "no ospf router-id"
+       sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../@) \
+      		-c "configure terminal" -c "no router ospf"
+     fi

@@ -1,0 +1,2 @@
+help: Show IPv6 Neighbor Discovery (ND) information
+run: sudo /sbin/ip netns exec $3 /bin/ip -f inet6 neigh list

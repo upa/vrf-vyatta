@@ -1,0 +1,14 @@
+multi:
+type: txt
+help: OSPFv3 area interface
+
+create: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" -c "router ospf6" \
+          -c "interface $VAR(@) area $VAR(../@)"
+
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	   -c "configure terminal" -c "router ospf6" \
+           -c "no interface $VAR(@) area $VAR(../@)"
+
+allowed: sudo /sbin/ip netns exec $VAR(../../../../@) \
+	${vyatta_sbindir}/vyatta-interfaces.pl --show all

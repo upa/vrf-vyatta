@@ -1,0 +1,15 @@
+type: txt
+help: Area's shortcut mode
+allowed: echo "default disable enable"
+syntax:expression: $VAR(@) in "default", "disable", "enable"; "Must be (default, disable, enable)"
+val_help: default; Set default; 
+val_help: disable; Disable shortcutting mode; 
+val_help: enable; Enable  shortcutting mode; 
+
+update:expression: "vtysh -c \"configure terminal\" \
+          -c \"router ospf\" \
+          -c \"area $VAR(../@) shortcut $VAR(@)\"; "
+
+delete:expression: "vtysh -c \"configure terminal\" \
+          -c \"router ospf\" \
+          -c \"no area $VAR(../@) shortcut $VAR(@)\"; "

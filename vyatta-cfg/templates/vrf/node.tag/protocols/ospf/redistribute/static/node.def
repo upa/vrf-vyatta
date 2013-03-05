@@ -1,0 +1,23 @@
+help: Redistribute static routes
+delete:expression: "touch /tmp/ospf-redist-static.$PPID" 
+end: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	-c "configure terminal"    \
+        -c "router ospf"                                          \
+        -c "no redistribute static";
+     if [ -f "/tmp/ospf-redist-static.$PPID" ]; then
+        rm -f /tmp/ospf-redist-static.$PPID;
+     else
+        if [ -n "$VAR(./metric/@)" ]; then
+           COND="metric $VAR(./metric/@)";
+        fi;
+	if [ -n "$VAR(./metric-type/@)" ]; then
+	   COND="$COND metric-type $VAR(./metric-type/@)";
+         fi;
+        if [ -n "$VAR(./route-map/@)" ]; then
+           COND="$COND route-map $VAR(./route-map/@)";
+        fi;
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	   -c "configure terminal" \
+           -c "router ospf"                                       \
+           -c "redistribute static $COND";
+     fi;

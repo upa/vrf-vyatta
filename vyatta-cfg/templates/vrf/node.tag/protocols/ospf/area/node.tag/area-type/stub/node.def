@@ -1,0 +1,19 @@
+help: Stub OSPF area
+
+syntax:expression: ! $VAR(../../@) in "0", "0.0.0.0"; "Backbone can't be stub"
+
+syntax:expression: $VAR(../nssa/) == "" ; "Must delete nssa area type first"
+
+syntax:expression: $VAR(../normal/) == "" ; "Must delete normal area type first"
+
+create:
+	/usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+	    -c "configure terminal" \
+	    -c "router ospf" \
+	    -c "area $VAR(../../@) stub"
+
+delete:
+	/usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+	    -c "configure terminal" \
+	    -c "router ospf" \
+	    -c "no area $VAR(../../@) stub"

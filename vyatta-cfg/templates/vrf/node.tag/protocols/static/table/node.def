@@ -1,0 +1,5 @@
+tag:
+type: u32
+help: Policy route table number
+syntax:expression: $VAR(@) >= 1 && $VAR(@) <= 200; "Must be between (1-200)"
+val_help: u32:1-200; Policy route table number

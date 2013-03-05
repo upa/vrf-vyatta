@@ -1,0 +1,5 @@
+type: u32
+help: Maximum hold time (msec)
+default: 10000
+syntax:expression: $VAR(@) >= 0 && $VAR(@) <= 600000; "must be between 0-600000"
+val_help: u32:0-600000; Max hold time in msec (default 10000)

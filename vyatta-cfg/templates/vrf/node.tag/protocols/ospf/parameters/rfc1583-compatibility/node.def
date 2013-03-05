@@ -1,0 +1,7 @@
+help: Enable rfc1583 criteria for handling AS external routes
+create:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c \"configure terminal\" -c \"router ospf\" \
+          -c \"ospf rfc1583compatibility \"; "
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c \"configure terminal\" -c \"router ospf\" \
+          -c \"no ospf rfc1583compatibility \"; "

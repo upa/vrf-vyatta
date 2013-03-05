@@ -1,0 +1,9 @@
+help: Do not advertise this range
+create:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf6\" \
+       -c \"area $VAR(../../@) range $VAR(../@) not-advertise\"; "
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf6\" \
+       -c \"no area $VAR(../../@) range $VAR(../@) not-advertise\"; "

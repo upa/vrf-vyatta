@@ -1,0 +1,14 @@
+type: u32
+help: Refresh timer
+syntax:expression: $VAR(@) >= 10 && $VAR(@) <= 1800; "must be between 10-1800"
+val_help: u32:10-1800; Timer value in seconds
+
+update: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "no refresh timer" -c "refresh timer $VAR(@)"; 
+
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "no refresh timer $VAR(@)";

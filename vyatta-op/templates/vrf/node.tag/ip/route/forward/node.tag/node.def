@@ -1,0 +1,3 @@
+help: Show kernel route table for a given route
+allowed: echo -n '<x.x.x.x | x.x.x.x/x>'
+run: sudo /sbin/ip netns exec $3 ip -s route list $5

@@ -1,0 +1,15 @@
+type: u32
+help: OSPF administrative distance
+val_help: u32:1-255; Administrative distance"
+
+syntax:expression: $VAR(@) >= 1 && $VAR(@) <= 255; "Must be between 1-255"
+
+update:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"distance $VAR(@) \"; "
+
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"no distance $VAR(@) \"; "

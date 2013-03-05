@@ -1,0 +1,10 @@
+help: Normal OSPF area
+syntax:expression: $VAR(../stub/) == "" ; "Must delete stub area type first"
+syntax:expression: $VAR(../nssa/) == "" ; "Must delete nssa area type first"
+create:expression: "                                                            \
+      if [ x$VAR(../../@) != x0.0.0.0 ] && [ x$VAR(../../@) != x0 ]; then       \
+           sudo /usr/local/bin/vtysh -x /var/run/quagga/$VAR(../../../../../@) \
+           -c \"configure terminal\"            \
+           -c \"router ospf\"                                                   \
+           -c \"no area $VAR(../../@) stub\" -c \"no area $VAR(../../@) nssa\"; \
+      fi; "

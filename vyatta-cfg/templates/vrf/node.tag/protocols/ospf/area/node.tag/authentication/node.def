@@ -1,0 +1,28 @@
+type: txt
+help: OSPF area authentication type
+allowed: echo "plaintext-password md5"
+syntax:expression: $VAR(@) in "plaintext-password", "md5"; \
+       "Must be either plaintext-password or md5"
+val_help: plaintext-password; Use plain-text authentication
+val_help: md5; Use md5 authentication
+
+   
+update:expression: "\
+        if [ x$VAR(@) == xplaintext-password ]; then               \
+	   sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+            -c \"configure terminal\"                              \
+            -c \"router ospf \"                                    \
+            -c \"no area $VAR(../@) authentication \"              \
+            -c \"area $VAR(../@) authentication \" ;               \
+         else                                                      \
+	   sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+            -c \"configure terminal\"                              \
+            -c \"router ospf \"                                    \
+            -c \"no area $VAR(../@) authentication \"              \
+            -c \"area $VAR(../@) authentication message-digest\" ; \
+         fi; "
+
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	    -c \"configure terminal\"       \
+            -c \"router ospf \"             \
+            -c \"no area $VAR(../@) authentication \" "

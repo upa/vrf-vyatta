@@ -1,0 +1,2 @@
+help: More detailed information
+run: ${vyatta_bindir}/vtyshow.pl "$@"

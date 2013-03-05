@@ -1,0 +1,19 @@
+type: txt
+help: Plain text password
+val_help: Plain text password (8 characters or less)
+
+syntax:expression: exec "                              \
+        if [ `echo -n '$VAR(@)' | wc -c` -gt 8 ]; then   \
+          echo Password must be 8 characters or less ; \
+          exit 1 ;                                     \
+        fi ; "
+
+commit:expression: $VAR(../md5/) == "" ; "md5 password already set"
+
+update: vtysh -c "configure terminal" -c "router ospf"         \
+          -c "area $VAR(../../../@) virtual-link $VAR(../../@) \
+            authentication authentication-key $VAR(@) "
+
+delete: vtysh  -c "configure terminal" -c "router ospf"           \
+          -c "no area $VAR(../../../@) virtual-link $VAR(../../@) \
+            authentication authentication-key";

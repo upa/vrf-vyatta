@@ -1,0 +1,13 @@
+help: Redistribute kernel routes
+
+end: vtysh -c "configure terminal" \
+       -c "router ospf6"                                       \
+       -c "no redistribute kernel";
+     if [ "$COMMIT_ACTION" = "SET" -o "$COMMIT_ACTION" = "ACTIVE" ]; then
+        if [ -n "$VAR(./route-map/@)" ]; then
+          COND="route-map $VAR(./route-map/@)";
+        fi;
+        vtysh -c "configure terminal" \
+          -c "router ospf6"                                         \
+          -c "redistribute kernel $COND";
+     fi;

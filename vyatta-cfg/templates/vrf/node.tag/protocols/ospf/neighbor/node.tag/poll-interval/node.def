@@ -1,0 +1,16 @@
+type: u32
+help: Dead neighbor polling interval
+default: 60
+val_help: u32:1-65535; Seconds between dead neighbor polling interval (default 60)
+
+syntax:expression: $VAR(@) >= 1 && $VAR(@) <= 65535; "Must be between 1-65535 seconds"
+
+update: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "neighbor $VAR(../@) poll-interval $VAR(@)";
+
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "neighbor $VAR(../@) poll-interval 60";

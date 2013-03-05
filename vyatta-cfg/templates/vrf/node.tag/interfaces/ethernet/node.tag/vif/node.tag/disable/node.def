@@ -1,0 +1,15 @@
+help: Disable interface
+update: sudo /sbin/ip netns exec $VAR(../../../../@) \
+	/etc/netplug/linkdown.d/dhclient $VAR(../../@).$VAR(../@)
+	if ! sudo /sbin/ip netns exec $VAR(../../../../@) \
+	ip link set $VAR(../../@).$VAR(../@) down 2>/dev/null; then
+          echo "Error disabling dev $VAR(../../@).$VAR(../@)"
+          sudo /sbin/ip netns exec $VAR(../../../../@) \
+	  /etc/netplug/linkup.d/dhclient $VAR(../../@).$VAR(../@)
+          exit 1
+        fi
+delete: if ! sudo /sbin/ip netns exec $VAR(../../../../@) \
+	ip link set $VAR(../../@).$VAR(../@) up; then
+          echo "Error enabling dev $VAR(../../@).$VAR(../@)"
+          exit 1
+        fi

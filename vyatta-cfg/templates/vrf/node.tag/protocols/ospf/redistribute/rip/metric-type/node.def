@@ -1,0 +1,5 @@
+type: u32
+help: OSPF metric type
+default: 2
+syntax:expression: $VAR(@) in 1, 2 ; "metric-type must be either 1 or 2"
+val_help: u32:1-2; Metric type (default 2)

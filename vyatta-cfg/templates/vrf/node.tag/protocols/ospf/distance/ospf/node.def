@@ -1,0 +1,24 @@
+help: OSPF administrative distance
+delete:expression: "touch /tmp/ospf-distance.$PPID"
+end:expression: "\
+      if [ -f \"/tmp/ospf-distance.$PPID\" ]; then                   \
+         sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+           -c \"configure terminal\" \
+           -c \"router ospf\"                                        \
+           -c \"no distance ospf\";                                  \
+	 rm /tmp/ospf-distance.$PPID;                                \
+      else                                                           \
+         if [ -n \"$VAR(./intra-area/@)\" ]; then                    \
+           PARM=\"intra-area $VAR(./intra-area/@)\";                 \
+         fi;                                                         \
+         if [ -n \"$VAR(./inter-area/@)\" ]; then                    \
+           PARM=\"$PARM inter-area $VAR(./inter-area/@)\";           \
+         fi;                                                         \
+         if [ -n \"$VAR(./external/@)\" ]; then                      \
+           PARM=\"$PARM external $VAR(./external/@)\";               \
+         fi;                                                         \
+         sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+           -c \"configure terminal\" \
+           -c \"router ospf\"                                        \
+           -c \"no distance ospf\" -c \"distance ospf $PARM\";       \
+      fi; "

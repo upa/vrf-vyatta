@@ -1,0 +1,10 @@
+type: txt
+help: Name of import-list
+create:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	-c \"configure terminal\" \
+        -c \"router ospf6 \" \
+        -c \"area $VAR(../@) import-list $VAR(@) \"; "
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	-c \"configure terminal\" \
+        -c \"router ospf6 \" \
+        -c \"no area $VAR(../@) import-list $VAR(@) \"; "

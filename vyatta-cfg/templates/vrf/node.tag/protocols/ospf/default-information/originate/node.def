@@ -1,0 +1,32 @@
+help: Distribute a default route
+delete: touch /tmp/ospf-default-info.$PPID
+end: if [ -f "/tmp/ospf-default-info.$PPID" ]; then
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "no default-information originate";
+     else
+        # uncomment and remove script pending bug 2525
+        #
+        # if [ -n "$VAR(./always/)" ]; then                       
+        #  PARM="always";                                          
+        # fi;                                                         
+        ${vyatta_sbindir}/vyatta-check-typeless-node.pl           \
+          "protocols ospf default-information originate always";
+        if [ $? -eq 0 ] ; then
+           PARM="always";  
+        fi;
+        if [ -n "$VAR(./metric/@)" ]; then
+           PARM="$PARM metric $VAR(./metric/@)";
+        fi;
+        if [ -n "$VAR(./metric-type/@)" ]; then
+           PARM="$PARM metric-type $VAR(./metric-type/@)";
+        fi;
+        if [ -n "$VAR(./route-map/@)" ]; then
+           PARM="$PARM route-map $VAR(./route-map/@)";
+        fi;
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "default-information originate $PARM";
+     fi;

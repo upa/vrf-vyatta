@@ -1,0 +1,9 @@
+type: u32
+help: Bandwidth of interface (kilobits/sec)
+syntax:expression: $VAR(@) >= 1 && $VAR(@) <= 10000000; "Must be between 1-10000000"
+val_help: u32:1-10000000; Bandwidth in kilobits/sec (for calculating OSPF cost)
+
+update: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+	-c "configure terminal" -c "interface $VAR(../../../../@).$VAR(../../../@)" -c "bandwidth $VAR(@)" 
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+	 -c "configure terminal" -c "interface $VAR(../../../../@).$VAR(../../../@)" -c "no bandwidth" 

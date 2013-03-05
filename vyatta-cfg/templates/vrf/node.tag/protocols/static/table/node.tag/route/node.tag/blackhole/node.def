@@ -1,0 +1,25 @@
+help: Silently discard pkts when matched
+
+end:
+    if [[ -n "$VAR(../../../table/@)" ]]
+      then
+      table="table $VAR(../../../table/@)"
+    fi
+    if [ ${COMMIT_ACTION} = 'DELETE' ]; then
+      if ! sudo /sbin/ip netns exec $VAR(../../../../../../@) \
+	${vyatta_sbindir}/vyatta-next-hop-check $VAR(../@) ipv4 address; then
+        exit 1;
+      fi
+
+      sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+		    -c "configure terminal" \
+                    -c "no ip route $VAR(../@) null0 $table";
+     else
+       if [ -n "$VAR(./distance/@)" ]; then
+         dist="$VAR(./distance/@)";
+       fi;
+
+       sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+		    -c "configure terminal" \
+                    -c "ip route $VAR(../@) null0 $table $dist";
+     fi;

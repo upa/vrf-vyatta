@@ -1,0 +1,9 @@
+help: Enable MPLS-TE functionality
+create:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"mpls-te on\"; "
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"no mpls-te\"; "

@@ -1,0 +1,19 @@
+help: Silently discard pkts when matched
+
+end: if [ ${COMMIT_ACTION} = 'DELETE' ]; then 
+      if ! sudo /sbin/ip netns exec $VAR(../../../../@) \
+	${vyatta_sbindir}/vyatta-next-hop-check $VAR(../@) ipv6 address; then
+        exit 1;
+      fi
+
+       sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "no ipv6 route $VAR(../@) null0";
+     else
+        if [ -n "$VAR(./distance/@)" ]; then
+	   DIST="$VAR(./distance/@)";
+        fi;
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "ipv6 route $VAR(../@) null0 $DIST";
+     fi;

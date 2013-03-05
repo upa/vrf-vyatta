@@ -1,0 +1,7 @@
+tag:
+type: ipv6net
+help: Static IPv6 route
+syntax:expression: exec "${vyatta_sbindir}/check_prefix_boundary $VAR(@)"
+
+commit:expression: $VAR(./next-hop/) != "" || $VAR(./blackhole/) != ""; \
+                   "Must add either a next-hop or blackhole for route $VAR(@)"

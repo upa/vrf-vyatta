@@ -1,0 +1,2 @@
+help: Show Network LSAs
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

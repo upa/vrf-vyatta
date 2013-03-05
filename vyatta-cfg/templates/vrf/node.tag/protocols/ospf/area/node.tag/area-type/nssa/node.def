@@ -1,0 +1,29 @@
+help: Nssa OSPF area
+syntax:expression: ! $VAR(../../@) in "0", "0.0.0.0"; "Backbone can't be NSSA"
+syntax:expression: $VAR(../normal/) == "" ; "Must delete normal area type first"
+syntax:expression: $VAR(../stub/) == "" ; "Must delete stub area type first"
+
+delete: touch /tmp/ospf-area-nssa.$PPID
+end: if [ -f "/tmp/ospf-area-nssa.$PPID" ]; then
+	sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+          -c "configure terminal" \
+          -c "router ospf" -c "no area $VAR(../../@) nssa";
+	rm /tmp/ospf-area-nssa.$PPID;
+     else
+        if [ -n "$VAR(translate/@)" ]; then
+           PARM="translate-$VAR(translate/@)";
+        fi;
+        # using workaround pending bug 2525
+        #
+        # if [ -n "$VAR(no-summary/)" ]; then
+        #   PARM="$PARM no-summary";
+        # fi;
+	${vyatta_sbindir}/vyatta-check-typeless-node.pl           \
+          "protocols ospf area $VAR(../../@) area-type nssa no-summary";
+        if [ $? -eq 0 ] ; then
+           PARM="$PARM no-summary";  
+        fi;
+	sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+          -c "configure terminal" \
+          -c "router ospf" -c "area $VAR(../../@) nssa $PARM";
+     fi;

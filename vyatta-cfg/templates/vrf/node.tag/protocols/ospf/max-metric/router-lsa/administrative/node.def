@@ -1,0 +1,9 @@
+help: Administratively apply, for an indefinite period
+create:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"max-metric router-lsa administrative\"; "
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"no max-metric router-lsa administrative \"; "

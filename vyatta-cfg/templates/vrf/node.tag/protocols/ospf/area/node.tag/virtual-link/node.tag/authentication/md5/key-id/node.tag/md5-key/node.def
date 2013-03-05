@@ -1,0 +1,9 @@
+type: txt
+help: MD5 key
+val_help: MD5 Key (16 characters or less)
+
+syntax:expression: exec "                              \
+        if [ `echo -n '$VAR(@)' | wc -c` -gt 16 ]; then  \
+          echo MD5 key must be 16 characters or less ; \
+          exit 1 ;                                     \
+        fi ; "

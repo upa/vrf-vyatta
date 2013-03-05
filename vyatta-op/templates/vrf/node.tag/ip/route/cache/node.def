@@ -1,0 +1,2 @@
+help: Show kernel route cache
+run: sudo /sbin/ip netns exec $3  ip -s route list cache

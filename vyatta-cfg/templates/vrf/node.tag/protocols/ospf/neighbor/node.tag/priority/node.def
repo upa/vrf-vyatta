@@ -1,0 +1,15 @@
+type: u32
+help: Neighbor priority in seconds
+default: 0
+syntax:expression: $VAR(@) >= 0 && $VAR(@) <= 255; "Priority must be between 0-255"
+val_help: u32:0-255; Neighbor priority (default 0)
+
+update: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "neighbor $VAR(../@) priority $VAR(@)"; 
+
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+          -c "configure terminal" \
+          -c "router ospf"                                        \
+          -c "neighbor $VAR(../@) priority 0";

@@ -1,0 +1,25 @@
+multi:
+type: txt
+help: Interface to exclude when using 'passive-interface default'
+val_help:<interface>; Interface to exclude from 'passive-interface default'
+
+allowed: sudo /sbin/ip netns exec $VAR(../../../@) \
+	${vyatta_sbindir}/vyatta-interfaces.pl --show all 
+
+syntax:expression: $VAR(../passive-interface/@) == "default"; \
+  "passive-interface-excluded can only be used with 'passive-interface default'"
+
+commit:expression: exec "/opt/vyatta/sbin/vyatta-interfaces.pl --dev=$VAR(@) --warn"
+
+create: if [ -z $VAR(@) ] ; then
+          echo "Error: must include interface";
+          exit 1;
+     	else  
+          sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+             -c "configure terminal" -c "router ospf" \
+             -c "no passive-interface $VAR(@)"
+	fi;
+
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+          -c "configure terminal" -c "router ospf" \
+          -c "passive-interface $VAR(@)";

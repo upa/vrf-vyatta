@@ -1,0 +1,23 @@
+type: txt
+help: MD5 key
+syntax:expression: pattern $VAR(@) "^[^[:space:]]{1,16}$"; "MD5 key must be 16 characters or less"
+val_help: MD5 Key (16 characters or less)
+
+# If this node is created 
+create:
+	sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../../../../@) \
+	 -c "configure terminal" -c "interface $VAR(../../../../../../../@).$VAR(../../../../../../@)" \
+             -c "ip ospf message-digest-key $VAR(../@) md5 $VAR(@)"
+
+# If the value of this node is changed
+update:
+	sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../../../../@) \
+	 -c "configure terminal" -c "interface $VAR(../../../../../../../@).$VAR(../../../../../../@)" \
+             -c "no ip ospf message-digest-key $VAR(../@)" \
+             -c "ip ospf message-digest-key $VAR(../@) md5 $VAR(@)"
+
+# If this node is deleted
+delete:
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../../../../@) \
+	 -c "configure terminal" -c "interface $VAR(../../../../../../../@).$VAR(../../../../../../@)" \
+             -c "no ip ospf message-digest-key $VAR(../@)"

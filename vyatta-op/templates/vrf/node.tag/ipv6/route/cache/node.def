@@ -1,0 +1,2 @@
+help: Show kernel IPv6 route cache
+run: sudo /sbin/ip netns exec $3 ip -s -f inet6 route list cache

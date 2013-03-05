@@ -1,0 +1,45 @@
+multi:
+type: txt
+help: Suppress routing updates on an interface
+allowed: sudo /sbin/ip netns exec $VAR(../../../@) \
+	${vyatta_sbindir}/vyatta-interfaces.pl --show all && echo default
+val_help:<interface>; Interface to be passive (i.e. suppress routing updates)
+val_help:default; Default to suppress routing updates on all interfaces
+
+create: sudo /opt/vyatta/sbin/vyatta_quagga_utils.pl \
+           --check-ospf-passive="$VAR(@)"
+        if [ $? != 0 ] ; then
+           exit 1;
+        fi
+        if [ -z $VAR(@) ] || [ "$VAR(@)" == "default" ] ; then
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+                 -c "configure terminal" \
+                 -c "router ospf"        \
+                 -c "passive-interface default";
+        else
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+                 -c "configure terminal" \
+                 -c "router ospf"        \
+                 -c "passive-interface $VAR(@)"
+        fi
+
+delete: if [ -z $VAR(@) ]
+	then 
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+                 -c "configure terminal" \
+                 -c "router ospf"        \
+                 -c "no passive-interface default"
+	else 
+           if [ "$VAR(@)" == "default" ]
+           then
+              if [ $VAR(../passive-interface-exclude/@) ] 
+              then
+                 echo "Error: delete passive-interface-exclude before deleting passive-interface default";
+                 exit 1;
+              fi
+           fi
+           sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+                 -c "configure terminal" \
+                 -c "router ospf"        \
+                 -c "no passive-interface $VAR(@)"
+ 	fi

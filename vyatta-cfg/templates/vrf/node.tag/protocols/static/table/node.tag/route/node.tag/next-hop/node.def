@@ -1,0 +1,44 @@
+tag:
+type: ipv4
+help: Next-hop router [REQUIRED]
+end:
+  if [[ -n "$VAR(../../../table/@)" ]]
+  then
+    table="table $VAR(../../../table/@)"
+  fi
+  if [[ -z "$VAR(./disable)" ]]
+  then
+    if [[ ${COMMIT_ACTION} = 'DELETE' ]]
+    then
+      if ! sudo /sbin/ip netns exec $VAR(../../../../../../@) \
+	${vyatta_sbindir}/vyatta-next-hop-check $VAR(../@) ipv4 address; then
+        exit 1;
+      fi
+      if sudo /sbin/ip netns exec $VAR(../../../../../../@) \
+	${vyatta_sbindir}/vyatta-gateway-static_route-check.pl \
+          "$VAR(../@)" "$VAR(@)"
+      then
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+		     -c "configure terminal" \
+                     -c "no ip route $VAR(../@) $VAR(@) $table"
+      fi
+    else
+      if [[ -n "$VAR(./distance/@)" ]]
+      then
+                    dist="$VAR(./distance/@)"
+      fi
+            sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+		    -c "configure terminal" \
+                   -c "ip route $VAR(../@) $VAR(@) $table $dist";
+    fi
+  else
+    if sudo /sbin/ip netns exec $VAR(../../../../../../@) \
+	${vyatta_sbindir}/vyatta-gateway-static_route-check.pl \
+        "$VAR(../@)" "$VAR(@)"
+    then
+      sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+		   -c "configure terminal" \
+                   -c "no ip route $VAR(../@) $VAR(@) $table"
+    fi
+  fi
+

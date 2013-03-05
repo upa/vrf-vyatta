@@ -1,0 +1,5 @@
+help: Disable Maximum Transmission Unit (MTU) mismatch detection
+create:sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+	 -c "configure terminal" -c "interface $VAR(../../../../@).$VAR(../../../@)" -c "ip ospf mtu-ignore"
+delete:sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+	 -c "configure terminal" -c "interface $VAR(../../../../@).$VAR(../../../@)" -c "no ip ospf mtu-ignore"

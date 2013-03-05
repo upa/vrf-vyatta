@@ -1,0 +1,2 @@
+help: Show Type-7 LSAs
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

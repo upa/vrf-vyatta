@@ -1,0 +1,14 @@
+type: u32
+help: Metric of redistributed routes
+syntax:expression: $VAR(@) >= 0 && $VAR(@) <= 16777214; "Must be between 0-16777214"
+val_help: u32:0-16777214; Metric of redistributed routes
+
+update:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"default-metric $VAR(@) \"; "
+
+delete:expression: "sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../@) \
+       -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"no default-metric $VAR(@) \"; "

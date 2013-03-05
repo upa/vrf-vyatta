@@ -1,0 +1,53 @@
+tag:
+
+type: ipv6
+
+help: Next-hop IPv6 router [REQUIRED]
+
+end:
+  if [[ -z "$VAR(./disable)" ]]
+  then
+    if [[ ${COMMIT_ACTION} = 'DELETE' ]]
+    then
+      if ! sudo /sbin/ip netns exec $VAR(../../../../@) \
+	${vyatta_sbindir}/vyatta-next-hop-check $VAR(../@) ipv6 address; then
+        exit 1;
+      fi
+      if sudo /sbin/ip netns exec $VAR(../../../../@) \
+	${vyatta_sbindir}/vyatta-gateway-static_route-check.pl \
+          "$VAR(../@)" "$VAR(@)"
+      then
+	quagga_conf=`sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	    -c "show running-config" | \
+            grep "^ipv6 route $VAR(../@) $VAR(@)"`
+	ifname=`echo $quagga_conf | awk '{print $5}'`
+
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+		     -c "configure terminal" \
+                     -c "no ipv6 route $VAR(../@) $VAR(@) $ifname"
+      fi
+    else
+      if [[ -n "$VAR(./distance/@)" ]]
+      then
+        DIST="$VAR(./distance/@)"
+      fi
+
+      if [[ -n "$VAR(./interface/@)" ]]
+      then
+        INTERFACE="$VAR(./interface/@)"
+      fi
+
+      sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+		   -c "configure terminal" \
+                   -c "ipv6 route $VAR(../@) $VAR(@) $INTERFACE $DIST";
+    fi
+  else
+    if sudo /sbin/ip netns exec $VAR(../../../../@) \
+	${vyatta_sbindir}/vyatta-gateway-static_route-check.pl \
+        "$VAR(../@)" "$VAR(@)"
+    then
+      sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+		   -c "configure terminal" \
+                   -c "no ipv6 route $VAR(../@) $VAR(@)"
+    fi
+  fi

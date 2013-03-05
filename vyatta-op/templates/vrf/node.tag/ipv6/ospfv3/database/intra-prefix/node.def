@@ -1,0 +1,2 @@
+help: Show Intra-Area-Prefix LSAs
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

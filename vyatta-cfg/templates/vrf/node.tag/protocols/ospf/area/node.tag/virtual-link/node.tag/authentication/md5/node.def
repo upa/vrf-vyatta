@@ -1,0 +1,14 @@
+help: MD5 key id
+commit:expression: $VAR(../plaintext-password/) == "" ; "plaintext-password already set"
+
+create: vtysh -c "configure terminal"                              \
+          -c "router ospf"                                         \
+          -c "no area $VAR(../../../@) virtual-link $VAR(../../@)  \
+            authentication-key"                                    \
+          -c "area $VAR(../../../@) virtual-link $VAR(../../@)     \
+            authentication message-digest";
+
+delete: vtysh -c "configure terminal"                              \
+          -c "router ospf"                                         \
+          -c "area $VAR(../../../@) virtual-link $VAR(../../@)     \
+            authentication null";

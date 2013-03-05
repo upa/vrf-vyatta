@@ -1,0 +1,7 @@
+help: Do not advertise this range
+create:expression: "vtysh -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"area $VAR(../../@) range $VAR(../@) not-advertise\"; "
+delete:expression: "vtysh -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"no area $VAR(../../@) range $VAR(../@) not-advertise\"; "

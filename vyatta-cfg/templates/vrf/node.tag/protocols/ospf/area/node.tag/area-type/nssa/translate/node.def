@@ -1,0 +1,8 @@
+type: txt
+help: Nssa-abr
+default: "candidate"
+syntax:expression: $VAR(@) in "always", "candidate", "never"; "Must be (always, candidate, or never)"
+
+val_help: always; NSSA-ABR to always translate
+val_help: candidate; NSSA-ABR for translate election (default)
+val_help: never; NSSA-ABR to never translate

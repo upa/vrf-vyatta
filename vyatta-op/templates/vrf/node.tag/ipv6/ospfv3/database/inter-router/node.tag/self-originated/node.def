@@ -1,0 +1,2 @@
+help: Show Self-originated LSAs
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

@@ -1,0 +1,9 @@
+type: txt
+
+help: Outgoing interface
+
+# show all current interface
+# but syntax accepts any interface since it may exist later (ppp etc)
+allowed: sudo /sbin/ip netns exec $VAR(../../../../../@) \
+	${vyatta_sbindir}/vyatta-interfaces.pl --show all
+

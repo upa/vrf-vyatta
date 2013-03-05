@@ -1,0 +1,2 @@
+help: Show Inter-Area-Router LSAs
+run: ${vyatta_bindir}/xvtyshow.pl "$@"

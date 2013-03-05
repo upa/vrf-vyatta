@@ -1,0 +1,13 @@
+help: Do not inject inter-area routes into stub
+
+create:
+	/usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+	     -c "configure terminal" \
+	    -c "router ospf" \
+	    -c "area $VAR(../../../@) stub no-summary "
+
+delete:
+	/usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../../@) \
+	    -c "configure terminal" \
+            -c "router ospf" \
+            -c "no area $VAR(../../../@) stub no-summary "

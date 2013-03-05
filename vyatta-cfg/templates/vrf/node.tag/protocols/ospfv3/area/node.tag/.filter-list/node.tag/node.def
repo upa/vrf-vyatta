@@ -1,0 +1,10 @@
+tag:
+type: txt
+help: Direction of filter (in|out)
+allowed: echo "in out"
+create:expression: "vtysh -c \"configure terminal\" \
+        -c \"router ospf6 \" \
+        -c \"area $VAR(../../@) filter-list $VAR(../@) $VAR(@) \"; "
+delete:expression: "vtysh -c \"configure terminal\" \
+        -c \"router ospf6 \" \
+        -c \"no area $VAR(../../@) filter-list $VAR(../@) $VAR(@) \"; "

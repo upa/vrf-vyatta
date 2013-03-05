@@ -1,0 +1,5 @@
+type: u32
+help: Delay (msec) from first change received till SPF calculation
+default: 200
+syntax:expression: $VAR(@) >= 0 && $VAR(@) <= 600000; "must be between 0-600000"
+val_help: u32:0-600000; Delay in msec (default 200)

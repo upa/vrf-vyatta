@@ -1,0 +1,23 @@
+tag:
+type: ipv6net
+help: Specify IPv6 prefix (border routers only)
+syntax:expression: exec "${vyatta_sbindir}/check_prefix_boundary $VAR(@)"
+
+delete: touch /tmp/ospf6-range.$PPID
+
+end: if [ -f /tmp/ospf6-range.$PPID ]; then
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf6"                                        \
+          -c "no area $VAR(../@) range $VAR(@)";
+        rm /tmp/ospf6-range.$PPID;
+     else
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	   --noerror -c "configure terminal" \
+          -c "router ospf6"                                               \
+          -c "no area $VAR(../@) range $VAR(@)";
+        sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+	  -c "configure terminal" \
+          -c "router ospf6"                                        \
+          -c "area $VAR(../@) range $VAR(@)";
+     fi;

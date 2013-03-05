@@ -1,0 +1,4 @@
+type: u32
+help: OSPF default metric
+syntax:expression: $VAR(@) >= 0 && $VAR(@) <= 16777214; "must be between 0-16777214"
+val_help: u32:0-16777214; Default metric

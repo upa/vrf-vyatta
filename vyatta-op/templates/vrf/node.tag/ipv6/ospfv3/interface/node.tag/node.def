@@ -1,0 +1,3 @@
+help: Specific insterface to examine
+run: ${vyatta_bindir}/xvtyshow.pl "$@"
+

@@ -1,0 +1,10 @@
+multi:
+type: ipv4net
+help: OSPF network [REQUIRED]
+syntax:expression: exec "${vyatta_sbindir}/check_prefix_boundary $VAR(@)"
+create:sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+       -c "configure terminal" \
+       -c "router ospf" -c "network $VAR(@) area $VAR(../@)"
+delete:sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../@) \
+       -c "configure terminal" \
+       -c "router ospf" -c "no network $VAR(@) area $VAR(../@)"

@@ -1,0 +1,10 @@
+tag:
+type: ipv4
+help: Virtual link
+syntax:expression: ! $VAR(../@) in "0", "0.0.0.0"; "Can't configure VL over area $VAR(../@)"
+create:expression: "vtysh -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"area $VAR(../@) virtual-link $VAR(@)\"; "
+delete:expression: "vtysh -c \"configure terminal\" \
+       -c \"router ospf\" \
+       -c \"no area $VAR(../@) virtual-link $VAR(@)\"; "

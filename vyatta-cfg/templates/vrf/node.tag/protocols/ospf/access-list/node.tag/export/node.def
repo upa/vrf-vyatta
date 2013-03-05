@@ -1,0 +1,25 @@
+multi:
+type: txt
+help: Filter for outgoing routing updates [REQUIRED]
+syntax:expression: $VAR(@) in "bgp", "connected", "kernel", "rip", "static"; "Must be (bgp, connected, kernel, rip, or static)"
+
+val_help: bgp                Filter bgp routes; 
+val_help: connected          Filter connected routes; 
+val_help: kernel             Filter kernel routes; 
+val_help: rip                Filter rip routes; 
+val_help: static             Filter static routes; 
+
+create: 
+	sudo /usr/local/bin/vtysh -x \
+		/var/run/quagga/$VAR(../../../../../../@)  \
+	    -c "configure terminal" \
+            -c "router ospf"                                      \
+            -c "distribute-list $VAR(../@) out $VAR(@)"; 
+
+delete:
+	sudo /usr/local/bin/vtysh -x \
+		/var/run/quagga/$VAR(../../../../../../@) \
+	    -c "configure terminal" \
+            -c "router ospf"                                      \
+            -c "no distribute-list $VAR(../@) out $VAR(@)";
+
