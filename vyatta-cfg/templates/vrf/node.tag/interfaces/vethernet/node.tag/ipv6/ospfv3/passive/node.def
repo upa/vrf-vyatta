@@ -1,0 +1,5 @@
+help: Disable forming of adjacency
+create: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+	-c "configure terminal" -c "interface $VAR(../../../@)" -c "ipv6 ospf6 passive"
+delete: sudo /usr/local/bin/vtysh -x /var/run/quagga-$VAR(../../../../../@) \
+	-c "configure terminal" -c "interface $VAR(../../../@)" -c "no ipv6 ospf6 passive"

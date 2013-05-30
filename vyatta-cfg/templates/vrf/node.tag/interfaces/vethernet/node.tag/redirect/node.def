@@ -1,0 +1,20 @@
+type: txt
+help: Incoming packet redirection destination
+allowed: sudo /sbin/ip netns exec $VAR(../../../../@) /opt/vyatta/sbin/vyatta-interfaces.pl --show=input
+
+syntax:expression: $VAR(@) != "$VAR(../@)" ;\
+	 "interface $VAR(../@): redirect to same interface not allowed"
+val_help: Interface for packet redirection
+
+commit:expression: $VAR(../mirror) == "";\
+		   "interface $VAR(../@) : can not do both redirect and mirror"
+
+commit:expression: $VAR(../traffic-policy/in) == ""; \
+		   "interface $VAR(../@) : can not use ingress policy and redirect"
+
+commit:expression: exec "sudo /sbin/ip netns exec $VAR(../../../@) /opt/vyatta/sbin/vyatta-interfaces.pl --dev $VAR(@) --check=all"
+
+update: sudo /sbin/ip netns exec $VAR(../../../@) \
+	/opt/vyatta/sbin/vyatta-qos.pl --update-action $VAR(../@)
+delete: sudo /sbin/ip netns exec $VAR(../../../@) \
+	/opt/vyatta/sbin/vyatta-qos.pl --delete-action $VAR(../@)

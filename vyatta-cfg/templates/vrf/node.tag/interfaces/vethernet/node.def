@@ -1,0 +1,27 @@
+tag:
+priority: 319
+type: txt
+help: Virtual ethernet pair interface
+allowed: sudo /sbin/ip netns exec $VAR(../../@) \
+	/opt/vyatta/sbin/vyatta-interfaces.pl --show=veth
+val_help: <vethNx>; Virtual ethernet interface name
+syntax:expression: pattern $VAR(@) "^veth[0-9]+.$" \
+			; "interface vethernet $VAR(@): not a valid name"
+
+
+syntax:expression: exec \
+    "if sudo /sbin/ip netns exec $VAR(../../@) \
+	[ ! -d /sys/class/net/$VAR(@) ]; then 
+        echo \"interface ethernet $VAR(@): does not exist\";
+        exit 1; \
+    fi"
+
+create: echo hoge
+	if ! cli-shell-api exists interfaces ethernet $VAR(@) disable; then
+          sudo /sbin/ip netns exec $VAR(../../@) ip link set $VAR(@) up
+        fi
+
+
+delete: sudo /sbin/ip netns exec $VAR(../../@) \
+	[ -d /sys/class/net/$VAR(../@) ] || exit 0
+        sudo /sbin/ip netns exec $VAR(../../@) ip link set $VAR(@) down

@@ -117,7 +117,6 @@ Configuration exapmle.
 Todo
 ----
 + bgpd on VRF
-+ veth type interface
 + some operational commands
 
 

@@ -1,0 +1,8 @@
+tag:
+type: txt
+help: Virtual internet peer interface configuration
+allowed: echo "$VAR(../@)a $VAR(../@)b"
+val_help: <vethNx>; veth interface name
+
+syntax:expression: pattern $VAR(@) "^veth[0-9]+(a|b)$" \
+		; "interface veth $VAR(@): not a valid name $VAR(@) $VAR(../@)"

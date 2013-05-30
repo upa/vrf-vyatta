@@ -1,0 +1,36 @@
+tag:
+priority: 400
+type: txt
+help: Vritual ethernet interface pair
+allowed: /opt/vyatta/sbin/xvyatta-veth.pl
+val_help: <vethN>; virtual ethernet peer prefix
+syntax:expression: pattern $VAR(@) "^veth[0-9]+$" \
+			; "interface veth $VAR(@) : not a valid name"
+
+
+create: if [ ! -d "/sys/class/net/$VAR(@)a" -a \
+	     ! -d "/sys/class/net/$VAR(@)b" ]; then
+		ip link add name $VAR(@)a type veth peer name $VAR(@)b
+
+	elif [ -d "/sys/class/net/$VAR(@)a" -a \
+               -d "/sys/class/net/$VAR(@)b" ]; then
+		echo "$VAR(@)a and $VAR(@)b already exist"
+	else
+		echo "one of pair interfaces exists"
+		exit -1
+	fi
+
+	ip link set dev $VAR(@)a up
+	ip link set dev $VAR(@)b up
+
+
+delete: 
+	if [ -d "/sys/class/net/$VAR(@)a" ]; then
+		ip link del dev $VAR(@)a
+	else
+		/sbin/ip netns exec `/tmp/$VAR(@)a-vrf` \
+		ip link del dev veth0
+	fi
+	
+	if [ -e /tmp/$VAR(@)a-vrf ]; then rm /tmp/$VAR(@)a-vrf; fi
+	if [ -e /tmp/$VAR(@)b-vrf ]; then rm /tmp/$VAR(@)b-vrf; fi

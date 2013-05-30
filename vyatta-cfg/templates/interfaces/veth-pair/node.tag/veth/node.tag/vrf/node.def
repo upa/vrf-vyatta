@@ -1,0 +1,14 @@
+help: attach to VRF
+type: txt
+allowed: ip netns list
+val_help: <txt>; VRF name
+
+create: 
+	sudo ip link set dev $VAR(../@) netns $VAR(@)
+	sudo /sbin/ip netns exec $VAR(@) ip link set dev $VAR(../@) up
+	echo $VAR(@) > /tmp/$VAR(../@)-vrf
+
+delete:
+	sudo /sbin/ip netns exec $VAR(@) ip link set dev $VAR(../@) netns 1
+	sudo ip link set dev $VAR(../@) up
+
